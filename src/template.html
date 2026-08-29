@@ -14,7 +14,19 @@
     <div class="main_content">
        <div class="sidebar">
             <div class="project list">Project List</div>
-            <button class="new_project"> New Project</button>
+
+            <form class="project_form">
+               <label for="project_name">Project Name</label>
+               <input type="text" name="project_name" id="project_name" required>
+
+               <div class="form_buttons">
+                  <button type="button" class="cancel_project">Cancel</button>
+                  <button type="submit" class="add_todo">Add Todo</button>
+               </div>
+               
+            </form>
+
+         <button class="new_project"> New Project</button>
        </div>
 
        <div class="content">
