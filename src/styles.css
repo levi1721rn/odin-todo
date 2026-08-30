@@ -89,6 +89,9 @@ header{
 
 .todos{
   margin: 0.5rem;
+  border: 2px solid black;
+  width: auto;
+  height: 85%;
 }
 
 /*project form styling */
