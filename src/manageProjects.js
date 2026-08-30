@@ -1,14 +1,12 @@
-export {manageProjects};
+export {projects , addProject , deleteProject};
+ 
+    let projects = [];   
 
-class manageProjects{
-    constructor(name){
-       this.name = name;
-       this.projects = [];
-    }
-    addProject(project){
+    function addProject(project){
        this.projects.push(project);
     }
-    deleteProject(project){
+
+    function deleteProject(project){
         if(this.projects.includes(project)){
             const index = this.todos.indexOf(project);
             this.projects.splice(index , 1);
@@ -17,4 +15,4 @@ class manageProjects{
             console.log("project doesn't exist in this projects.");
         }
     }
-}
+
