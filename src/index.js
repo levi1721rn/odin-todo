@@ -3,8 +3,8 @@ import "./styles.css";
 
 import { Todo } from "./todo.js";
 import { Project } from "./project.js";
-import { projects , addProject , deleteProject} from "./manageProjects.js";
 
+let projects = [];
 
 // we'll handle the logic and dom stuff here.
 
@@ -14,6 +14,7 @@ import { projects , addProject , deleteProject} from "./manageProjects.js";
 const project_form = document.querySelector('.project_form');
 const project_name_input = document.querySelector('#project_name');
 const sidebar = document.querySelector('.sidebar');
+let currentProject;
 
 const new_project = document.querySelector('.new_project');
 new_project.addEventListener('click',() => {
@@ -34,6 +35,7 @@ const form =  document.querySelector('.project_form');
 form.addEventListener("submit", (event) => {
 
     event.preventDefault();
+    console.log(projects);
 
     //creating the project
 
@@ -46,6 +48,37 @@ form.addEventListener("submit", (event) => {
     const project_element = document.createElement('div'); 
     project_element.textContent = project_name_input.value;
     project_element.style.border = '2px solid black';
+    project_element.style.display = 'flex';
+
+    project_element.addEventListener('click' , () => {
+        currentProject = project_element;
+        currentProject.style.backgroundColor = 'green';
+    })
+
+    project.element = project_element;
+
+    //delete button and its functionality
+    const deleteButton = document.createElement('button');
+    deleteButton.style.width = '20%';
+    deleteButton.style.height = '90%';
+    deleteButton.textContent = '🗑️';
+    deleteButton.style.marginLeft = 'auto';
+
+    deleteButton.addEventListener('click' , () => {
+        if(projects.includes(project)){
+
+            const index = projects.indexOf(project);
+            projects.splice(index , 1);
+
+            project.element.remove();
+        }
+        else{
+            console.log("project doesn't exist in this projects.");
+        }
+    })
+
+    project_element.appendChild(deleteButton);
+
     sidebar.appendChild(project_element);
    
 
@@ -53,28 +86,17 @@ form.addEventListener("submit", (event) => {
 })
 
 
-//accessing projects
 
 
-projects.forEach((project) => {
-    let currentProject;
 
-    project.addEventListener('click' , () =>{
-        currentProject = project;
-    })
-
-    const todos = document.querySelector('.todos');
-
-    //functionality for addTodo button
-    const add_todo_button = document.querySelector('.add_todo');
+//functionality for addTodo button
+// const add_todo_button = document.querySelector('.add_todo');
     
-    add_todo_button.addEventListener('click' , () => {
-        const todo = document.createElement('div');
-        todo.style.border = '2px solid black';
-        todos.appendChild(todo);
-    })
-
-})
+//     add_todo_button.addEventListener('click' , () => {
+//         const todo = document.createElement('div');
+//         todo.style.border = '2px solid black';
+//         todos.appendChild(todo);
+// })
 
 
 //gotta add a form for the addTodo button and use to complete the rest of the things.
