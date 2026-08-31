@@ -1,10 +1,6 @@
-export {projects , addProject , deleteProject};
+export {projects , deleteProject};
  
-    let projects = [];   
-
-    function addProject(project){
-       this.projects.push(project);
-    }
+    let projects = [];
 
     function deleteProject(project){
         if(this.projects.includes(project)){
