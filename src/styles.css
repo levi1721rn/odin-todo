@@ -146,6 +146,8 @@ header{
   gap: 10px;
 }
 
+
+/* todo form styling */
 .todo_form {
     width: 350px;
 
@@ -218,4 +220,8 @@ header{
 .add_todo:hover,
 .cancel_todo:hover {
     opacity: 0.7;
+}
+
+.todo_form {
+  display: none;
 }

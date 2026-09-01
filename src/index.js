@@ -85,20 +85,31 @@ form.addEventListener("submit", (event) => {
     project_form.style.display = 'none';
 })
 
-
-
-
-
 //functionality for addTodo button
-// const add_todo_button = document.querySelector('.add_todo');
+const add_todo_button = document.querySelector('.new_todo');
     
-//     add_todo_button.addEventListener('click' , () => {
-//         const todo = document.createElement('div');
-//         todo.style.border = '2px solid black';
-//         todos.appendChild(todo);
-// })
+add_todo_button.addEventListener('click' , () => {
+       
+        const todo_title = document.querySelector('#todo_name');
+
+        const todo_display = document.querySelector('.todo_display');
+        todo_display.style.display = 'none';
+
+        const todo_form = document.querySelector('.todo_form');
+        todo_form.style.display = 'block';
 
 
-//gotta add a form for the addTodo button and use to complete the rest of the things.
+        const todo_add_button = document.querySelector('.add_todo');
+
+        const cancel_todo = document.querySelector('.cancel_todo');
+        cancel_todo.addEventListener('click' , () => {
+            todo_form.style.display = 'none';
+            todo_title.value = '';
+        })
+        
+
+})
+
+
 //although everything seems easy at this point shit's pretty tough.
 //i'll eventually do it though.
