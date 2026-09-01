@@ -92,6 +92,9 @@ header{
   border: 2px solid black;
   width: auto;
   height: 85%;
+
+  display: flex;
+  justify-content: center;
 }
 
 /*project form styling */
@@ -133,12 +136,86 @@ header{
   background: #eee;
 }
 
-.add_todo {
+.add_project {
   background: #333;
   color: white;
 }
 
-.form_buttons {
+.project_form_buttons {
   display: flex;
   gap: 10px;
+}
+
+.todo_form {
+    width: 350px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    padding: 1rem;
+
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.todo_form label {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.todo_form input[type="text"],
+.todo_form input[type="date"],
+.todo_form select {
+    padding: 0.5rem 0;
+
+    border: none;
+    border-bottom: 1px solid #ddd;
+
+    background: transparent;
+    outline: none;
+
+    font-size: 1rem;
+}
+
+.todo_form input[type="text"]:focus,
+.todo_form input[type="date"]:focus,
+.todo_form select:focus {
+    border-bottom: 1px solid #000;
+}
+
+.checklist_row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checklist_row label {
+    color: #666;
+}
+
+.form_buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.cancel_todo,
+.add_todo {
+    padding: 0.4rem 0.75rem;
+
+    border: none;
+    background: transparent;
+
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.add_todo {
+    font-weight: 600;
+}
+
+.add_todo:hover,
+.cancel_todo:hover {
+    opacity: 0.7;
 }
