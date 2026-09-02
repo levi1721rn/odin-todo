@@ -1,20 +1,20 @@
 export {Todo};
 
 class Todo{
-    constructor(title,description,dueDate,priority){
+    constructor(title,description,dueDate,priority ,checked){
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.checkList = false;
+        this.checked = checked;
     }
 
-    createTodo(title , description , dueDate , priority){
-        const todo = new Todo(title , description , dueDate , priority);
+    createTodo(title , description , dueDate , priority , checked){
+        const todo = new Todo(title , description , dueDate , priority ,checked);
     }
 
     markComplete(todo){
-        todo.checkList = true;
+        todo.checked = true;
     }
     
     changePriority(todo){

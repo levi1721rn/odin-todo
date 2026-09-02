@@ -222,6 +222,6 @@ header{
     opacity: 0.7;
 }
 
-.todo_form {
+.todo_form , .todo_display {
   display: none;
 }
