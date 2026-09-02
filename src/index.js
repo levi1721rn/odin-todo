@@ -143,7 +143,9 @@ const cancel_todo = document.querySelector('.cancel_todo');
     cancel_todo.addEventListener('click' , () => {
             todo_form.style.display = 'none';
             todo_title.value = '';
-    })
+})
+
+//functionality to show only the todos of only the current project
 
 
 //although everything seems easy at this point shit's pretty tough.
