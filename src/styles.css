@@ -225,3 +225,8 @@ header{
 .todo_form , .todo_display {
   display: none;
 }
+
+.todo_display{
+    display: flex;
+    align-items: flex-start;
+}
