@@ -15,7 +15,6 @@ const project_form = document.querySelector('.project_form');
 const project_name_input = document.querySelector('#project_name');
 const sidebar = document.querySelector('.sidebar');
 let currentProject;
-console.log(currentProject);
 
 const new_project = document.querySelector('.new_project');
 
@@ -54,7 +53,6 @@ form.addEventListener("submit", (event) => {
 
     project_element.addEventListener('click', () => {
         currentProject = project;
-        console.log(currentProject);
 
         for (let i = 0; i < projects.length; i++) {
             if (projects[i].element === project.element) {
@@ -164,7 +162,6 @@ todo_form.addEventListener('submit', (event) => {
         );
 
         currentProject.addTodo(todo);
-        console.log(currentProject);
 
         // CREATE TODO ELEMENTS
 
@@ -259,6 +256,22 @@ todo_form.addEventListener('submit', (event) => {
         todo_element.appendChild(details_element);
         todo_element.appendChild(checklist_element);
 
+        //delete todo button
+        const deleteButton = document.createElement('button');
+
+        deleteButton.style.width = '20%';
+        deleteButton.style.height = '90%';
+        deleteButton.textContent = '🗑️';
+        deleteButton.style.marginLeft = 'auto';
+
+        deleteButton.addEventListener('click', () => {
+            currentProject.deleteTodo(todo);
+
+            todo.element.remove();
+        });
+
+        todo_element.appendChild(deleteButton);
+
         todo_display.appendChild(todo_element);
 
     }
@@ -279,13 +292,5 @@ todo_form.addEventListener('submit', (event) => {
         todo_title.value = '';
     });
 });
-
-
-
-
-
-// functionality to show only the todos of only the current project
-
-// although everything seems easy at this point shit's pretty tough.
-// i'll eventually do it though.
+    
 
