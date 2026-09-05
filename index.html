@@ -3,9 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Todo Page</title>
 <script defer src="main.js"></script></head>
 <body>
-    
+    <header>
+       TODO LIST APP
+    </header>
+
+
+    <div class="main_content">
+       <div class="sidebar">
+            <div class="project list">Project List</div>
+
+            <form class="project_form">
+               <label for="project_name">Project Name</label>
+               <input type="text" name="project_name" id="project_name" required>
+
+               <div class="project_form_buttons">
+                  <button type="button" class="cancel_project">Cancel</button>
+                  <button type="submit" class="add_project">Add Project</button>
+               </div>
+            </form>
+
+         <button class="new_project"> New Project</button>
+       </div>
+
+       <div class="content">
+          <div class="project title" > Project Title</div>
+          <button class="new_todo">New Todo</button>
+
+          <div class="todos">
+            
+           <div class="todo_display"></div>
+
+            <form class="todo_form">
+               <label for="todo_title">Title</label>
+               <input type="text" name="todo_name" id="todo_name" required>
+
+               <label for="todo_description">Description</label>
+               <input type="text" name="todo_description" id="todo_description" required>
+
+               <label for="todo_dueDate">Due Date</label>
+               <input type="date" name="todo_dueDate" id="todo_dueDate" required>     
+               
+               <label for="todo_priority">Priority</label>
+               <select name="todo_priority" id="todo_priority" required>
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+               </select>
+
+               <div class="checklist_row">
+                  <input type="checkbox" id="todo_checkList">
+                  <label for="todo_checkList">Checklist</label>
+               </div> 
+
+               <div class="form_buttons">
+                  <button type="button" class="cancel_todo">Cancel</button>
+                  <button type="submit" class="add_todo">Add Todo</button>
+               </div>
+            </form>
+         
+
+          </div>
+
+       </div>
+    </div>
+
 </body>
 </html>
