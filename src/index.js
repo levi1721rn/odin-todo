@@ -2,50 +2,20 @@
 import "./styles.css";
 
 import { Todo } from "./todo.js";
-import { Project } from "./project.js";
+import { Project} from "./project.js";
 
 let projects = [];
+function saveProjects(projects){
+     localStorage.setItem('projects', JSON.stringify(projects));
+}
 
-// we'll handle the logic and dom stuff here.
-
-
-// dom and interactivity for new project button.
-
-const project_form = document.querySelector('.project_form');
-const project_name_input = document.querySelector('#project_name');
-const sidebar = document.querySelector('.sidebar');
-let currentProject;
-
-const new_project = document.querySelector('.new_project');
-
-new_project.addEventListener('click', () => {
-    project_form.style.display = 'block';
-});
-
-const project_cancel_button = document.querySelector('.cancel_project');
-
-project_cancel_button.addEventListener('click', () => {
-    project_name_input.value = '';
-    project_form.style.display = 'none';
-});
-
-const form = document.querySelector('.project_form');
-
-form.addEventListener("submit", (event) => {
-
-    event.preventDefault();
-    console.log(projects);
-
-    // creating the project
-
-    const project_name_value = project_name_input.value;
-    const project = new Project(project_name_value);
-    projects.push(project);
-
+const renderProject = function(project){
     // displaying the project on the sidebar
+     
+    const sidebar = document.querySelector('.sidebar');
 
     const project_element = document.createElement('div');
-    project_element.textContent = project_name_input.value;
+    project_element.textContent = project.name;
     project_element.style.border = '2px solid black';
     project_element.style.display = 'flex';
 
@@ -97,73 +67,10 @@ form.addEventListener("submit", (event) => {
     project_element.appendChild(deleteButton);
 
     sidebar.appendChild(project_element);
+}
 
-    project_form.style.display = 'none';
-});
-
-
-// functionality for addTodo button
-
-const add_todo_button = document.querySelector('.new_todo');
-
-add_todo_button.addEventListener('click', () => {
-
-    const todo_display = document.querySelector('.todo_display');
-
-    todo_display.style.display = 'none';
-
-    const todo_form = document.querySelector('.todo_form');
-
-    todo_form.style.display = 'block';
-});
-
-
-// functionality to add todos to projects
-
-const todo_form = document.querySelector('.todo_form');
-
-todo_form.addEventListener('submit', (event) => {
-
-    const todo_display = document.querySelector('.todo_display');
-
-    const todo_title = document.querySelector('#todo_name');
-    const todo_description = document.querySelector('#todo_description');
-    const todo_dueDate = document.querySelector('#todo_dueDate');
-    const todo_priority = document.querySelector('#todo_priority');
-    const todo_check = document.querySelector('#todo_checkList');
-
-    event.preventDefault();
-
-    // TODO DISPLAY CSS
-
-    todo_display.style.display = 'flex';
-    todo_display.style.flexDirection = 'row';
-    todo_display.style.flexWrap = 'wrap';
-    todo_display.style.alignItems = 'flex-start';
-    todo_display.style.alignContent = 'flex-start';
-    todo_display.style.gap = '15px';
-
-    todo_display.style.width = '100%';
-    todo_display.style.maxWidth = '100%';
-    todo_display.style.boxSizing = 'border-box';
-
-    todo_display.style.overflowX = 'hidden';
-    todo_display.style.overflowY = 'auto';
-
-
-    if (currentProject !== undefined) {
-
-        const todo = new Todo(
-            todo_title.value,
-            todo_description.value,
-            todo_dueDate.value,
-            todo_priority.value,
-            todo_check.checked
-        );
-
-        currentProject.addTodo(todo);
-
-        // CREATE TODO ELEMENTS
+const renderTodo = function(todo_display , project , todo ){
+// CREATE TODO ELEMENTS
 
         const todo_element = document.createElement('div');
 
@@ -198,13 +105,12 @@ todo_form.addEventListener('submit', (event) => {
 
         todo_element.style.overflow = 'hidden';
 
-
         // VALUES
 
-        title_element.textContent = todo_title.value;
-        description_element.textContent = todo_description.value;
-        priority_element.textContent = todo_priority.value;
-        dueDate_element.textContent = todo_dueDate.value;
+        title_element.textContent = todo.title;
+        description_element.textContent = todo.description;
+        priority_element.textContent = todo.priority;
+        dueDate_element.textContent = todo.dueDate;
 
 
         // TITLE CSS
@@ -239,7 +145,7 @@ todo_form.addEventListener('submit', (event) => {
         // CHECKBOX
 
         checklist_element.type = 'checkbox';
-        checklist_element.checked = todo_check.checked;
+        checklist_element.checked = todo.checked;
 
         checklist_element.style.width = '18px';
         checklist_element.style.height = '18px';
@@ -265,14 +171,143 @@ todo_form.addEventListener('submit', (event) => {
         deleteButton.style.marginLeft = 'auto';
 
         deleteButton.addEventListener('click', () => {
-            currentProject.deleteTodo(todo);
+            project.deleteTodo(todo);
 
             todo.element.remove();
+
+            saveProjects(projects);
+            JSON.parse(localStorage.getItem('projects'));
         });
 
         todo_element.appendChild(deleteButton);
 
         todo_display.appendChild(todo_element);
+
+};
+
+
+(function getProjects(){
+
+    const todo_display = document.querySelector('.todo_display');
+
+    const projects_data = JSON.parse(localStorage.getItem('projects'));
+    if(projects_data === null){
+          
+    }
+    else{
+    projects_data.forEach((plainProject) => {
+       const project = new Project(plainProject.name);
+       projects.push(project);
+       renderProject(project);
+
+        plainProject.todos.forEach((plainTodo) => {
+        const todo = new Todo(plainTodo.title , plainTodo.description , plainTodo.dueDate , plainTodo.priority , plainTodo.checked);
+        project.addTodo(todo);
+
+        renderTodo(todo_display , project , todo);
+
+       })
+    })
+    }
+})();
+
+// we'll handle the logic and dom stuff here.
+
+// dom and interactivity for new project button.
+
+const project_form = document.querySelector('.project_form');
+const project_name_input = document.querySelector('#project_name');
+const sidebar = document.querySelector('.sidebar');
+let currentProject;
+
+const new_project = document.querySelector('.new_project');
+
+new_project.addEventListener('click', () => {
+    project_form.style.display = 'block';
+});
+
+const project_cancel_button = document.querySelector('.cancel_project');
+
+project_cancel_button.addEventListener('click', () => {
+    project_name_input.value = '';
+    project_form.style.display = 'none';
+});
+
+const form = document.querySelector('.project_form');
+
+form.addEventListener("submit", (event) => {
+
+    event.preventDefault();
+
+    // creating the project
+
+    const project_name_value = project_name_input.value;
+    const project = new Project(project_name_value);
+    projects.push(project);
+
+    //calling render project
+    renderProject(project);
+
+    project_form.style.display = 'none';
+});
+
+
+// functionality for addTodo button
+
+const add_todo_button = document.querySelector('.new_todo');
+
+add_todo_button.addEventListener('click', () => {
+
+    const todo_display = document.querySelector('.todo_display');
+
+    todo_display.style.display = 'none';
+
+    const todo_form = document.querySelector('.todo_form');
+
+    todo_form.style.display = 'block';
+});
+
+
+// functionality to add todos to projects
+
+const todo_form = document.querySelector('.todo_form');
+
+todo_form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const todo_display = document.querySelector('.todo_display');
+
+    const todo_title = document.querySelector('#todo_name');
+    const todo_description = document.querySelector('#todo_description');
+    const todo_dueDate = document.querySelector('#todo_dueDate');
+    const todo_priority = document.querySelector('#todo_priority');
+    const todo_check = document.querySelector('#todo_checkList');
+
+    if (currentProject !== undefined) {
+
+        const todo = new Todo(
+            todo_title.value,
+            todo_description.value,
+            todo_dueDate.value,
+            todo_priority.value,
+            todo_check.checked
+        );
+    
+        currentProject.addTodo(todo);
+          
+        console.log(todo);
+        renderTodo(todo_display, currentProject, todo);
+        // title_element.textContent = todo_title.value;
+        // description_element.textContent = todo_description.value;
+        // priority_element.textContent = todo_priority.value;
+        // dueDate_element.textContent = todo_dueDate.value;
+
+        
+        // checklist_element.checked = todo_check.checked;
+        
+
+        saveProjects(projects);
+        JSON.parse(localStorage.getItem('projects'));
 
     }
     else {
