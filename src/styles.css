@@ -228,5 +228,16 @@ header{
 
 .todo_display{
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: flex-start;
+    align-content: flex-start;
+    gap: 15px;
+
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    overflow-x: hidden;
+    overflow-y: auto;
 }
